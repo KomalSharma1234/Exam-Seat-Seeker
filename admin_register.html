@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Registration - Exam Seat Seeker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">🎓 Admin Portal</div>
+        <div class="nav-links" style="display: flex; gap: 1rem;">
+            <a href="/" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Home</a>
+            <a href="/login/admin" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Admin Login</a>
+        </div>
+    </nav>
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <h1>Create Admin Account</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form action="/admin/register" method="POST" class="card" style="border-top: 4px solid var(--accent);">
+                <h2>Admin Sign Up</h2>
+                <input type="text" name="username" placeholder="Admin Username" pattern="[A-Za-z]+" required>
+                <input type="password" name="password" placeholder="Admin Password" required>
+                <input type="password" name="admin_secret" placeholder="Enter Secret Admin Key" required>
+                <button type="submit" class="btn" style="background: var(--accent); color: var(--bg); margin-top: 1rem;">Create Admin Account</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/magic.js') }}"></script>
+</body>
+
+</html>

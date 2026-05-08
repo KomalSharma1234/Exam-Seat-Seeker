@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Student Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">🎓 Exam Seat Seeker</div>
+        <div class="nav-links" style="display: flex; gap: 1rem;">
+            <a href="/" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Home</a>
+            <a href="/login/admin" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Admin Login</a>
+            <a href="/register" class="btn btn-sm btn-outline" style="margin-top:0;">Sign Up</a>
+        </div>
+    </nav>
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <h1>Student Login</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form action="/login/student" method="POST" class="card">
+                <h2>Welcome Back</h2>
+                <input type="text" name="username" placeholder="Roll No (Username)" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="btn">Login Securely</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/magic.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Exam Seat Seeker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">🎓 Exam Seat Seeker</div>
+        <div class="nav-links" style="display: flex; gap: 1rem;">
+            <a href="/" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Home</a>
+            <a href="/login/student" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Student Login</a>
+            <a href="/login/admin" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Admin Login</a>
+        </div>
+    </nav>
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <h1>Create an Account</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form action="/register" method="POST" class="card">
+                <h2>Sign Up</h2>
+                <input type="text" name="username" placeholder="Roll No / Employee ID (as Username)" required>
+                <input type="password" name="password" placeholder="Create a Password" required>
+                <button type="submit" class="btn" style="margin-top: 1rem;">Register Now</button>
+            </form>
+            <div style="margin-top: 1.5rem; text-align: center;">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Are you an Admin? <a href="/admin/register" style="color: var(--accent); text-decoration: none; font-weight: bold;">Register Admin Account here</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/magic.js') }}"></script>
+</body>
+
+</html>

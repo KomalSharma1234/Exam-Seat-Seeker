@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modern.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">🎓 Exam Seat Seeker </div>
+        <div class="nav-links" style="display: flex; gap: 1rem;">
+            <a href="/" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Home</a>
+            <a href="/login/student" class="btn btn-sm btn-outline" style="border:none; margin-top:0;">Student Login</a>
+            <a href="/admin/register" class="btn btn-sm btn-outline" style="margin-top:0;">Admin Sign Up</a>
+        </div>
+    </nav>
+    <div class="auth-wrapper admin-theme">
+        <div class="auth-container">
+            <h1 style="color: var(--primary);">Admin Portal Login</h1>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form action="/login/admin" method="POST" class="card">
+                <h2>Admin Credentials</h2>
+                <input type="text" name="username" placeholder="Employee ID (Username)" required>
+                <input type="password" name="password" placeholder="Admin Password" required>
+                <button type="submit" class="btn">Access Portal</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/magic.js') }}"></script>
+</body>
+
+</html>
