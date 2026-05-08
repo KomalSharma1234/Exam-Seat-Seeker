@@ -1,19 +1,4 @@
-/* ==============================================
-   Exam Seat Seeker — Main JavaScript
-   Chitkara University
-   ==============================================
-   Handles:
-     1. PDF file upload (drag & drop + click)
-     2. Send PDF to Flask /upload endpoint
-     3. Roll number search via /search endpoint
-     4. Dynamic result display
-     5. Stats & preview rendering
-   ============================================== */
 
-
-// =============================================
-//  DOM REFERENCES
-// =============================================
 const uploadArea = document.getElementById("upload-area");
 const pdfInput = document.getElementById("pdf-input");
 const browseBtn = document.getElementById("browse-btn");
@@ -40,20 +25,13 @@ const previewDesc = document.getElementById("preview-desc");
 let selectedFile = null;
 
 
-// =============================================
-//  1. FILE SELECTION (Click + Drag & Drop)
-// =============================================
 
-// Click the upload area or browse button to open file dialog
 uploadArea.addEventListener("click", () => pdfInput.click());
 browseBtn.addEventListener("click", (e) => { e.stopPropagation(); pdfInput.click(); });
-
-// File selected via dialog
 pdfInput.addEventListener("change", (e) => {
     if (e.target.files.length > 0) selectFile(e.target.files[0]);
 });
 
-// Drag & Drop
 uploadArea.addEventListener("dragover", (e) => { e.preventDefault(); uploadArea.classList.add("drag-over"); });
 uploadArea.addEventListener("dragleave", () => uploadArea.classList.remove("drag-over"));
 uploadArea.addEventListener("drop", (e) => {
@@ -62,14 +40,8 @@ uploadArea.addEventListener("drop", (e) => {
     if (e.dataTransfer.files.length > 0) selectFile(e.dataTransfer.files[0]);
 });
 
-// Remove selected file
 btnRemove.addEventListener("click", clearFile);
 
-
-/**
- * Validate and show the selected file info.
- * @param {File} file - The selected file object
- */
 function selectFile(file) {
     // Validate: must be PDF
     if (!file.name.toLowerCase().endsWith(".pdf")) {
@@ -79,7 +51,6 @@ function selectFile(file) {
 
     selectedFile = file;
 
-    // Show file details
     fileNameSpan.textContent = file.name;
     fileSizeSpan.textContent = formatSize(file.size);
     fileInfoDiv.style.display = "flex";
@@ -89,9 +60,6 @@ function selectFile(file) {
 }
 
 
-/**
- * Clear the selected file and reset UI.
- */
 function clearFile() {
     selectedFile = null;
     pdfInput.value = "";
@@ -100,22 +68,11 @@ function clearFile() {
     btnUpload.disabled = true;
 }
 
-
-/**
- * Format bytes to a human-readable string.
- * @param {number} bytes
- * @returns {string}
- */
 function formatSize(bytes) {
     if (bytes < 1024) return bytes + " B";
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
     return (bytes / (1024 * 1024)).toFixed(1) + " MB";
 }
-
-
-// =============================================
-//  2. UPLOAD PDF
-// =============================================
 
 btnUpload.addEventListener("click", async () => {
     if (!selectedFile) {
@@ -123,15 +80,14 @@ btnUpload.addEventListener("click", async () => {
         return;
     }
 
-    // Show loading state on button
     setButtonLoading(btnUpload, true);
 
     try {
-        // Build FormData with the PDF file
+     
         const formData = new FormData();
         formData.append("pdf_file", selectedFile);
 
-        // Send POST /upload
+     
         const response = await fetch("/upload", {
             method: "POST",
             body: formData,
@@ -166,19 +122,8 @@ btnUpload.addEventListener("click", async () => {
     }
 });
 
-
-// =============================================
-//  3. SEARCH BY ROLL NUMBER
-// =============================================
-
 btnSearch.addEventListener("click", performSearch);
 rollInput.addEventListener("keypress", (e) => { if (e.key === "Enter") performSearch(); });
-
-
-/**
- * Send roll number to /search and display the result.
- * Handles exact matches, fuzzy matches, and not-found.
- */
 async function performSearch() {
     const roll = rollInput.value.trim();
 
@@ -258,30 +203,12 @@ async function performSearch() {
     }
 }
 
-
-// =============================================
-//  4. HELPER FUNCTIONS
-// =============================================
-
-/**
- * Display a result message in a result-box element.
- * @param {HTMLElement} el   - Result box div
- * @param {string} message   - HTML content
- * @param {string} type      - "success", "error", "info", "warning"
- */
 function showResult(el, message, type) {
     el.style.display = "block";
     el.className = `result-box result-${type}`;
     el.innerHTML = message;
 }
 
-
-/**
- * Toggle button loading state.
- * Uses .btn-content and .btn-loading spans inside the button.
- * @param {HTMLElement} btn
- * @param {boolean} loading
- */
 function setButtonLoading(btn, loading) {
     const content = btn.querySelector(".btn-content");
     const loader = btn.querySelector(".btn-loading");
@@ -292,11 +219,6 @@ function setButtonLoading(btn, loading) {
     btn.disabled = loading;
 }
 
-
-/**
- * Show statistics cards after PDF upload.
- * @param {Object} data - Response from /upload
- */
 function showStats(data) {
     statsSection.style.display = "grid";
     document.getElementById("stat-students").textContent = data.total_records;
@@ -306,12 +228,6 @@ function showStats(data) {
     document.getElementById("stat-file").style.fontSize = "0.7rem";
 }
 
-
-/**
- * Show the data preview table.
- * @param {Array} records - Array of student objects (first 5)
- * @param {number} total  - Total number of records
- */
 function showPreview(records, total) {
     if (!records || records.length === 0) {
         previewSection.style.display = "none";
@@ -332,11 +248,6 @@ function showPreview(records, total) {
         </tr>
     `).join("");
 }
-
-
-// =============================================
-//  5. ON PAGE LOAD — Check if data already loaded
-// =============================================
 window.addEventListener("DOMContentLoaded", async () => {
     try {
         const res = await fetch("/status");
@@ -347,6 +258,6 @@ window.addEventListener("DOMContentLoaded", async () => {
             statusText.textContent = `${data.records_loaded} records loaded`;
         }
     } catch (e) {
-        // Server not running — that's okay
+       
     }
 });
