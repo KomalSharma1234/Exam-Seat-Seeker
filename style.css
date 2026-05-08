@@ -1,11 +1,6 @@
-/* ==============================================
-   Exam Seat Seeker — Chitkara University
-   Premium Dark Theme Stylesheet
-   ============================================== */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-/* ========== DESIGN TOKENS ========== */
 :root {
     --primary: #6C63FF;
     --primary-dark: #5A52D5;
@@ -34,8 +29,6 @@
     --shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-/* ========== RESET ========== */
 *,
 *::before,
 *::after {
@@ -98,8 +91,6 @@ body::after {
         transform: translate(60px, 40px) scale(1.08)
     }
 }
-
-/* ========== NAVBAR ========== */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -177,8 +168,6 @@ body::after {
         box-shadow: 0 0 0 7px transparent
     }
 }
-
-/* ========== HERO ========== */
 .hero {
     text-align: center;
     padding: 56px 20px 20px;
@@ -221,8 +210,6 @@ body::after {
     margin: 0 auto;
     line-height: 1.6
 }
-
-/* ========== CONTAINER ========== */
 .container {
     max-width: 740px;
     margin: 0 auto;
@@ -232,7 +219,6 @@ body::after {
     gap: 24px
 }
 
-/* ========== CARDS ========== */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(10px);
@@ -280,7 +266,6 @@ body::after {
     line-height: 1.5
 }
 
-/* ========== FORMAT HINT ========== */
 .format-hint {
     background: var(--glass);
     border: 1px solid var(--border);
